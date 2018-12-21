@@ -13,6 +13,7 @@ public enum Coin {
     case ethereum
     case litecoin
     case bitcoinCash
+    case neo
     
     //https://github.com/satoshilabs/slips/blob/master/slip-0132.md
     public var privateKeyVersion: UInt32 {
@@ -37,6 +38,7 @@ public enum Coin {
         switch self {
         case .litecoin:
             return 0x30
+        case .neo:  return 0x21
         default:
             return 0x00
         }
@@ -61,6 +63,15 @@ public enum Coin {
         }
     }
     
+    public var masterSecret:String {
+        switch self {
+        case .neo:
+            return "Nist256p1 seed"
+        default:
+            return "Bitcoin seed"
+        }
+    }
+    
     
     public var coinType: UInt32 {
         switch self {
@@ -72,6 +83,7 @@ public enum Coin {
             return 2
         case .bitcoinCash:
             return 145
+        case .neo: return 888
         }
     }
 }

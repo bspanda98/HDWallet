@@ -47,6 +47,7 @@
 		34B7B85320F75E5B00D2C34A /* AddressGenerationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B7B85220F75E5B00D2C34A /* AddressGenerationTests.swift */; };
 		34B7B85720F7848D00D2C34A /* String+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B7B85620F7848D00D2C34A /* String+Hex.swift */; };
 		4F2F69048F4C0654B71F4BD9 /* Pods_HDWalletKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A569BE41EBB1D63A5EEF6AF2 /* Pods_HDWalletKit.framework */; };
+		8DA0F64121CCA88E003C3059 /* NeoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DA0F64021CCA88E003C3059 /* NeoTests.swift */; };
 		BCE5FDC09C5D670BD95BD7DF /* Pods_HDWalletKit_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C966360214CAE5E6DE31B27C /* Pods_HDWalletKit_Tests.framework */; };
 /* End PBXBuildFile section */
 
@@ -116,6 +117,7 @@
 		34B7B85020F75E4E00D2C34A /* CryptoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoTests.swift; sourceTree = "<group>"; };
 		34B7B85220F75E5B00D2C34A /* AddressGenerationTests.swift */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = AddressGenerationTests.swift; sourceTree = "<group>"; };
 		34B7B85620F7848D00D2C34A /* String+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Hex.swift"; sourceTree = "<group>"; };
+		8DA0F64021CCA88E003C3059 /* NeoTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NeoTests.swift; sourceTree = "<group>"; };
 		A241CE5210CEC9DFFCA47EA2 /* Pods-HDWalletKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HDWalletKit.release.xcconfig"; path = "Pods/Target Support Files/Pods-HDWalletKit/Pods-HDWalletKit.release.xcconfig"; sourceTree = "<group>"; };
 		A569BE41EBB1D63A5EEF6AF2 /* Pods_HDWalletKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HDWalletKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF520BDF5160D0B847AED112 /* Pods-HDWalletKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HDWalletKit.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HDWalletKit/Pods-HDWalletKit.debug.xcconfig"; sourceTree = "<group>"; };
@@ -288,6 +290,7 @@
 				34A5322D215307DF00B95C66 /* SignTransactionTests.swift */,
 				34A532332158E96C00B95C66 /* ERC20Tests.swift */,
 				34753F7A216E78430025E0F4 /* ConverterTests.swift */,
+				8DA0F64021CCA88E003C3059 /* NeoTests.swift */,
 			);
 			path = HDWalletKit_Tests;
 			sourceTree = "<group>";
@@ -480,12 +483,14 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-HDWalletKit_Tests/Pods-HDWalletKit_Tests-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/GMEllipticCurveCrypto/GMEllipticCurveCrypto.framework",
 				"${BUILT_PRODUCTS_DIR}/scrypt/scrypt.framework",
 				"${BUILT_PRODUCTS_DIR}/secp256k1.swift/secp256k1.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CryptoSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GMEllipticCurveCrypto.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/scrypt.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/secp256k1.framework",
 			);
@@ -563,6 +568,7 @@
 				34B7B84F20F75DBF00D2C34A /* MnemonicTests.swift in Sources */,
 				34753F7B216E78430025E0F4 /* ConverterTests.swift in Sources */,
 				34A532342158E96C00B95C66 /* ERC20Tests.swift in Sources */,
+				8DA0F64121CCA88E003C3059 /* NeoTests.swift in Sources */,
 				344167EC212CC100008B8A91 /* KeystoreTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

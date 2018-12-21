@@ -21,7 +21,7 @@ public struct PrivateKey {
     private var keyType: PrivateKeyType
     
     public init(seed: Data, coin: Coin) {
-        let output = Crypto.HMACSHA512(key: "Bitcoin seed".data(using: .ascii)!, data: seed)
+        let output = Crypto.HMACSHA512(key: coin.masterSecret.data(using: .ascii)!, data: seed)
         self.raw = output[0..<32]
         self.chainCode = output[32..<64]
         self.index = 0
@@ -36,7 +36,7 @@ public struct PrivateKey {
         default:
             let decodedPk = Base58.bytesFromBase58(pk)
             let wifData = Data(decodedPk).dropLast(4).dropFirst()
-            self.raw = wifData
+            self.raw = wifData.prefix(32)
         }
         self.chainCode = Data(capacity: 32)
         self.index = 0
@@ -69,6 +69,7 @@ public struct PrivateKey {
         switch self.coin {
         case .bitcoin: fallthrough
         case .litecoin: fallthrough
+        case .neo: fallthrough
         case .bitcoinCash:
             return self.wif()
         case .ethereum:
@@ -96,7 +97,7 @@ public struct PrivateKey {
         let digest = Crypto.HMACSHA512(key: chainCode, data: data)
         let factor = BInt(data: digest[0..<32])
         
-        let curveOrder = BInt(hex: "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141")!
+        let curveOrder = BInt(hex: ECDSA.chosenCurve.chosenCurveN())!
         let derivedPrivateKey = ((BInt(data: raw) + factor) % curveOrder).data
         let derivedChainCode = digest[32..<64]
         return PrivateKey(

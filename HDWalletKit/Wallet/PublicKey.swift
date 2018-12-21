@@ -24,10 +24,9 @@ public struct PublicKey {
         switch coin {
         case .bitcoin: fallthrough
         case .bitcoinCash: fallthrough
-        case .litecoin:
-            return generateBtcAddress()
-        case .ethereum:
-            return generateEthAddress()
+        case .litecoin: return generateBtcAddress()
+        case .neo: return generateNeoAddress()
+        case .ethereum: return generateEthAddress()
         }
     }
     
@@ -35,6 +34,16 @@ public struct PublicKey {
         let prefix = Data([coin.publicKeyHash])
         let publicKey = getPublicKey(compressed: true)
         let payload = RIPEMD160.hash(publicKey.sha256())
+        let checksum = (prefix + payload).doubleSHA256.prefix(4)
+        return Base58.encode(prefix + payload + checksum)
+    }
+    
+    func generateNeoAddress() -> String {
+        var publicKeyBytes = Data([coin.publicKeyHash])
+        publicKeyBytes += getPublicKey(compressed: true)
+        publicKeyBytes += Data([0xAC])
+        let payload = RIPEMD160.hash(publicKeyBytes.sha256())
+        let prefix = Data([0x17])
         let checksum = (prefix + payload).doubleSHA256.prefix(4)
         return Base58.encode(prefix + payload + checksum)
     }

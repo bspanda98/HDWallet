@@ -9,7 +9,7 @@
 import CryptoSwift
 
 public final class Crypto {
-   public static func HMACSHA512(key: Data, data: Data) -> Data {
+    public static func HMACSHA512(key: Data, data: Data) -> Data {
         let output: [UInt8]
         do {
             output = try HMAC(key: key.bytes, variant: .sha512).authenticate(data.bytes)
@@ -30,7 +30,7 @@ public final class Crypto {
     }
     
     public static func generatePublicKey(data: Data, compressed: Bool) -> Data {
-        return ECDSA.secp256k1.generatePublicKey(with: data, isCompressed: compressed)
+        return ECDSA.chosenCurve.generatePublicKey(with: data, isCompressed: compressed)
     }
     
     public static func sha3keccak256(data:Data) -> Data {
