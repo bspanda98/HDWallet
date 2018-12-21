@@ -24,5 +24,6 @@ Pod::Spec.new do |s|
   s.dependency 'secp256k1.swift', '~> 0.1.4'
   s.dependency 'CryptoSwift', '~> 0.12'
   s.dependency 'scrypt', '~> 2.0'
+  s.dependency 'GMEllipticCurveCrypto', '~> 1.3.0'
   
 end
