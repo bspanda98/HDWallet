@@ -6,7 +6,7 @@
 //  Copyright © 2018 Essentia. All rights reserved.
 //
 
-import secp256k1
+import secp256k1_swift
 import CryptoSwift
 
 public class EllipticCurveEncrypterSecp256k1 {

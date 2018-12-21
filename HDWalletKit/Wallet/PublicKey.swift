@@ -8,7 +8,7 @@
 
 import Foundation
 import CryptoSwift
-import secp256k1
+import secp256k1_swift
 
 public struct PublicKey {
     public let rawPrivateKey: Data
