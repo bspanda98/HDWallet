@@ -29,12 +29,16 @@ public struct PrivateKey {
         self.keyType = .hd
     }
     
-    public init(pk: String, coin: Coin) {
+    public init(pk: String, coin: Coin) throws {
         switch coin {
         case .ethereum:
             self.raw = Data(hex: pk)
         default:
             let decodedPk = Base58.bytesFromBase58(pk)
+            let checksumDropped = decodedPk.prefix(decodedPk.count - 4)
+            guard checksumDropped.count == (1 + 32) || checksumDropped.count == (1 + 32 + 1) else {
+                throw HDWalletKitError.cryptoError(HDWalletKitError.CryptoError.failedToEncode(element: pk))
+            }
             let wifData = Data(decodedPk).dropLast(4).dropFirst()
             self.raw = wifData.prefix(32)
         }
