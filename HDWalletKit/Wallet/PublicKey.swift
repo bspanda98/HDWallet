@@ -24,6 +24,8 @@ public struct PublicKey {
         switch coin {
         case .bitcoin: fallthrough
         case .bitcoinCash: fallthrough
+        case .zcoin: fallthrough
+        case .divi: fallthrough
         case .litecoin: return generateBtcAddress()
         case .neo: return generateNeoAddress()
         case .ethereum: return generateEthAddress()

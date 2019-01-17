@@ -75,6 +75,8 @@ public struct PrivateKey {
         case .bitcoin: fallthrough
         case .litecoin: fallthrough
         case .neo: fallthrough
+        case .zcoin: fallthrough
+        case .divi: fallthrough
         case .bitcoinCash:
             return self.wif()
         case .ethereum:
