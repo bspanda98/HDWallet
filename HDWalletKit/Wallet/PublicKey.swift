@@ -29,6 +29,7 @@ public struct PublicKey {
         case .litecoin: return generateBtcAddress()
         case .neo: return generateNeoAddress()
         case .ethereum: return generateEthAddress()
+        case .zilliqa: return generateZilAddress()
         }
     }
     
@@ -54,6 +55,12 @@ public struct PublicKey {
         let publicKey = getPublicKey(compressed: false)
         let formattedData = (Data(hex: coin.addressPrefix) + publicKey).dropFirst()
         let addressData = Crypto.sha3keccak256(data: formattedData).suffix(20)
+        return coin.addressPrefix + EIP55.encode(addressData)
+    }
+    
+    func generateZilAddress() -> String {
+        let publicKey = getPublicKey(compressed: true)
+        let addressData = publicKey.sha256().suffix(20)
         return coin.addressPrefix + EIP55.encode(addressData)
     }
     

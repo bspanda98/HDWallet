@@ -31,6 +31,7 @@ public struct PrivateKey {
     
     public init(pk: String, coin: Coin) throws {
         switch coin {
+        case .zilliqa: fallthrough
         case .ethereum:
             self.raw = Data(hex: pk)
         default:
@@ -79,6 +80,7 @@ public struct PrivateKey {
         case .divi: fallthrough
         case .bitcoinCash:
             return self.wif()
+        case .zilliqa: fallthrough
         case .ethereum:
             return self.raw.toHexString()
         }

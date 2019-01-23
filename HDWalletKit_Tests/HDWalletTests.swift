@@ -28,18 +28,7 @@ class MidasWalletTests: XCTestCase {
                     ]
             ]
             """
-        let vectors = try! JSONSerialization.jsonObject(with: expectedVectors.data(using: .utf8)!, options: []) as! [[String]]
-        for i in 0 ..< mnemonics.count {
-            let vector = vectors[i]
-            let expected = (address: vector[0], key: vector[1])
-            let seed = Mnemonic.createSeed(mnemonic: mnemonics[i])
-            let wallet = Wallet.init(seed: seed, coin: .zcoin)
-            let account = wallet.generateAccount()
-            XCTAssertEqual(account.address, expected.address)
-            XCTAssertEqual(account.rawPrivateKey, expected.key)
-            let pkFromWif = try! PrivateKey.init(pk: account.rawPrivateKey, coin: .zcoin)
-            XCTAssertEqual(pkFromWif.raw, account.privateKey.raw)
-        }
+        performTest(dataTest: expectedVectors, coin: .zcoin)
     }
     
     func testDIVI() {
@@ -55,25 +44,38 @@ class MidasWalletTests: XCTestCase {
                     ]
             ]
             """
-        let vectors = try! JSONSerialization.jsonObject(with: expectedVectors.data(using: .utf8)!, options: []) as! [[String]]
+        performTest(dataTest: expectedVectors, coin: .divi)
+    }
+    
+    func testZilliqa() {
+        let expectedVectors = """
+            [
+                    [
+                        "0xeA5108634A593dD58371F4291D6ad66Bb5370049",
+                        "ad16821790b4db11f93a5532f4c2df6361bfd406730863581263141108b56109"
+                    ],
+                    [
+                        "0xDb245DA0267efb87AEF5986a2730249d66A02784",
+                        "0cdf0b5a630d30cfee3b7b4f7457b8c061659d4fc248c3e7d4872109807bd556"
+                    ]
+            ]
+            """
+        performTest(dataTest: expectedVectors, coin: .zilliqa)
+    }
+    
+    
+    func performTest(dataTest:String, coin:Coin) {
+        let vectors = try! JSONSerialization.jsonObject(with: dataTest.data(using: .utf8)!, options: []) as! [[String]]
         for i in 0 ..< mnemonics.count {
             let vector = vectors[i]
             let expected = (address: vector[0], key: vector[1])
-            let seed = Mnemonic.createSeed(mnemonic: mnemonics[i])
-            let wallet = Wallet.init(seed: seed, coin: .divi)
+            let seed = Mnemonic.createSeed(mnemonic: "able matrix tornado mix elephant issue jeans nice glue physical foster jacket")
+            let wallet = Wallet.init(seed: seed, coin: coin)
             let account = wallet.generateAccount()
             XCTAssertEqual(account.address, expected.address)
             XCTAssertEqual(account.rawPrivateKey, expected.key)
-            let pkFromWif = try! PrivateKey.init(pk: account.rawPrivateKey, coin: .zcoin)
+            let pkFromWif = try! PrivateKey.init(pk: account.rawPrivateKey, coin: coin)
             XCTAssertEqual(pkFromWif.raw, account.privateKey.raw)
         }
     }
-    
-//    func testZilliqa() {
-//        let pk = try! PrivateKey.init(pk: "95F661DC7CE2E4886AE8BAD1B2E7315B78A94DD09C43755F07D4A1BAE0B2A929", coin: .zilliqa)
-//        let account = Account.init(privateKey: pk)
-//        print(account.address)
-//        print(account.rawPublicKey)
-//        print(account.rawPrivateKey)
-//    }
 }

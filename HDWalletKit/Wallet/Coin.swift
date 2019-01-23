@@ -11,6 +11,7 @@ import Foundation
 public enum Coin {
     case bitcoin
     case ethereum
+    case zilliqa
     case litecoin
     case bitcoinCash
     case neo
@@ -54,6 +55,7 @@ public enum Coin {
     
     public var addressPrefix:String {
         switch self {
+        case .zilliqa: fallthrough
         case .ethereum: return "0x"
         default: return ""
         }
@@ -76,6 +78,7 @@ public enum Coin {
         case .zcoin: return 136
         case .divi: return 301
         case .neo: return 888
+        case .zilliqa: return 8888
         }
     }
 }
