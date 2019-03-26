@@ -75,6 +75,7 @@ public struct PrivateKey {
         switch self.coin {
         case .bitcoin: fallthrough
         case .litecoin: fallthrough
+        case .dash: fallthrough
         case .neo: fallthrough
         case .zcoin: fallthrough
         case .divi: fallthrough

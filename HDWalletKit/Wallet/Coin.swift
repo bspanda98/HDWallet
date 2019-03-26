@@ -13,6 +13,7 @@ public enum Coin {
     case ethereum
     case zilliqa
     case litecoin
+    case dash
     case bitcoinCash
     case neo
     case zcoin
@@ -36,6 +37,7 @@ public enum Coin {
     public var publicKeyHash: UInt8 {
         switch self {
         case .litecoin: return 0x30
+        case .dash: return 0x4c
         case .zcoin: return 0x52
         case .divi: return 30
         case .neo: return 0x21
@@ -47,6 +49,7 @@ public enum Coin {
     public var wifPreifx: UInt8 {
         switch self {
         case .litecoin: return 0xB0
+        case .dash: return 0xcc
         case .zcoin: return 0xd2
         case .divi: return 0xd4
         default: return 0x80
@@ -73,6 +76,7 @@ public enum Coin {
         switch self {
         case .bitcoin: return 0
         case .litecoin: return 2
+        case .dash: return 5
         case .ethereum: return 60
         case .bitcoinCash: return 145
         case .zcoin: return 136
@@ -80,5 +84,44 @@ public enum Coin {
         case .neo: return 888
         case .zilliqa: return 8888
         }
+    }
+    
+    public func validatePrivateKey(_ privateKey:String) -> Bool {
+        switch self {
+        case .zilliqa: fallthrough
+        case .ethereum:
+            let raw = Data.init(hex: privateKey)
+            return ECDSA.secp256k1.generatePublicKey(privateKeyData: raw, isCompression: true) != nil
+        default:
+            let decodedPk = Base58.bytesFromBase58(privateKey)
+            guard decodedPk.count > 4 else {return false}
+            let checksumDropped = decodedPk.prefix(decodedPk.count - 4)
+            guard checksumDropped.count == (1 + 32) || checksumDropped.count == (1 + 32 + 1) else {
+                return false
+            }
+        }
+        return true
+    }
+    
+    public func validateAddress(_ address:String) -> Bool {
+        switch self {
+        case .zilliqa: fallthrough
+        case .ethereum:
+            guard let data = Data.fromHex(address) else {return false}
+            guard data.count == 20 else {return false}
+            if !address.hasPrefix("0x") {
+                return false
+            }
+        default:
+            let decoded = Data(Base58.bytesFromBase58(address))
+            guard decoded.count > 4 else {return false}
+            let checksum = decoded.suffix(4)
+            let pubKeyHash = decoded.dropLast(4)
+            let checksumConfirm = pubKeyHash.doubleSHA256.prefix(4)
+            guard checksum == checksumConfirm else { return false }
+            let prefix = self == .neo ? Data([0x17]) : Data([publicKeyHash])
+            guard pubKeyHash.prefix(prefix.count) == prefix else {return false}
+        }
+        return true
     }
 }

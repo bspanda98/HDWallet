@@ -26,6 +26,7 @@ public struct PublicKey {
         case .bitcoinCash: fallthrough
         case .zcoin: fallthrough
         case .divi: fallthrough
+        case .dash: fallthrough
         case .litecoin: return generateBtcAddress()
         case .neo: return generateNeoAddress()
         case .ethereum: return generateEthAddress()
