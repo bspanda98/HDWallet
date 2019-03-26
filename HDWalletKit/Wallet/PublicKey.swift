@@ -71,6 +71,10 @@ public struct PublicKey {
     }
     
     public func getPublicKey(compressed: Bool) -> Data {
+        if coin == .neo { ECDSA.chosenCurve = ECDSA.secp256r1 }
+        defer {
+            ECDSA.chosenCurve = ECDSA.secp256k1
+        }
         return Crypto.generatePublicKey(data: rawPrivateKey, compressed: compressed)
     }
 }

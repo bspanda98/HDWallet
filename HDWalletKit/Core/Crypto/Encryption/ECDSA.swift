@@ -64,7 +64,7 @@ public final class ECDSA:secp256 {
 }
 
 
-public class ECDSA_secp256r1 : secp256 {
+public final class ECDSA_secp256r1 : secp256 {
     public func generatePublicKey(with privateKey: Data, isCompressed: Bool) -> Data {
         let crypto = GMEllipticCurveCrypto.init(curve: GMEllipticCurveSecp256r1)!
         crypto.privateKey = privateKey

@@ -89,6 +89,12 @@ public struct PrivateKey {
     
     public func derived(at node:DerivationNode) -> PrivateKey {
         guard keyType == .hd else { fatalError() }
+        
+        if coin == .neo { ECDSA.chosenCurve = ECDSA.secp256r1 }
+        defer {
+            ECDSA.chosenCurve = ECDSA.secp256k1
+        }
+        
         let edge: UInt32 = 0x80000000
         guard (edge & node.index) == 0 else { fatalError("Invalid child index") }
         
