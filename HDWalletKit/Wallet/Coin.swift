@@ -45,6 +45,15 @@ public enum Coin {
         }
     }
     
+    public var scripthash: UInt8 {
+        switch self {
+        case .dash: return 0x10
+        case .zcoin: return 0x07
+        case .divi: return 13
+        default: return 0x05
+        }
+    }
+    
     //https://www.reddit.com/r/litecoin/comments/6vc8tc/how_do_i_convert_a_raw_private_key_to_wif_for/
     public var wifPreifx: UInt8 {
         switch self {
@@ -120,7 +129,9 @@ public enum Coin {
             let checksumConfirm = pubKeyHash.doubleSHA256.prefix(4)
             guard checksum == checksumConfirm else { return false }
             let prefix = self == .neo ? Data([0x17]) : Data([publicKeyHash])
-            guard pubKeyHash.prefix(prefix.count) == prefix else {return false}
+            if pubKeyHash.prefix(prefix.count) == prefix {return true}
+            let scrypt = Data([scripthash])
+            return pubKeyHash.prefix(scrypt.count) == scrypt
         }
         return true
     }
