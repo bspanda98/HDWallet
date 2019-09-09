@@ -8,7 +8,6 @@
 
 import Foundation
 import CryptoSwift
-import scrypt
 
 public class KeystoreV3: KeystoreInterface {
     public var keystoreParams: KeystoreParamsV3?
